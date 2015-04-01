@@ -1,0 +1,39 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        jcenter()
+    }
+}
+
+plugins {
+    id "java"
+    id "maven-publish"
+    id "com.jfrog.bintray" version "1.1"
+}
+
+group = 'com.saikocat.dropwizard-bundles'
+version = '0.0.1'
+
+repositories {
+    jcenter()
+}
+
+apply from: file('gradle/dependencyVersion.gradle')
+apply from: file('gradle/convention.gradle')
+apply from: file('gradle/publishing.gradle')
+
+dependencies {
+    compile (
+        "io.dropwizard:dropwizard-core:${dropwizardVersion}",
+        "org.elasticsearch:elasticsearch:${elasticsearchVersion}",
+    )
+
+    testCompile (
+        "junit:junit:${junitVersion}",
+        "org.mockito:mockito-all:${mockitoVersion}"
+    )
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.3'
+}

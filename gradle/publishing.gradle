@@ -1,0 +1,86 @@
+project.ext {
+    websiteUrl = 'https://github.com/saikocat/dropwizard-elasticsearch'
+    issueTrackerUrl = 'https://github.com/saikocat/dropwizard-elasticsearch/issues'
+    vcsUrl = 'https://github.com/saikocat/dropwizard-elasticsearch.git'
+    projectDesc = 'A bundle approach to Elasticsearch for Dropwizard >= 0.8.0'
+}
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+def pomConfig = {
+    url "${websiteUrl}"
+    licenses {
+        license {
+            name "The Apache Software License, Version 2.0"
+            url "http://www.apache.org/licenses/LICENSE-2.0.txt"
+            distribution "repo"
+        }
+    }
+    developers {
+        developer {
+            name "Nguyen Duc Hoa"
+            email "saikocatz@gmail.com"
+        }
+        developer {
+            name "Chua Soon Dee"
+            email "soondee.chua@gmail.com"
+        }
+    }
+    issueManagement {
+        system 'github'
+        url "${issueTrackerUrl}"
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+
+            pom.withXml {
+                def root = asNode()
+                    root.appendNode('description', "${projectDesc}")
+                    root.children().last() + pomConfig
+            }
+        }
+    }
+}
+
+// For local build/dev, we expect them to be found in ~/.gradle/gradle.properties,
+// otherwise to be set in the build server
+bintray {
+   user = project.hasProperty('bintrayUser') ? project.bintrayUser : System.getenv('BINTRAY_USER')
+   key = project.hasProperty('bintrayKey') ? project.bintrayKey : System.getenv('BINTRAY_KEY')
+
+   publications = ['mavenJava']
+   dryRun = System.getenv('BINTRAY_DRY_RUN') ?: true      // reduce accidental upload
+   publish = System.getenv('BINTRAY_PUBLISH') ?: false    // and publish
+   pkg {
+       repo = 'maven'
+       name = "${project.name}"
+       desc = "${projectDesc}"
+       websiteUrl = "${websiteUrl}"
+       issueTrackerUrl = "${issueTrackerUrl}"
+       vcsUrl = "${vcsUrl}"
+       licenses = ['Apache-2.0']
+       labels = ['dropwizard', 'elasticsearch', 'bundle']
+       publicDownloadNumbers = true
+   }
+}
+
+task install(dependsOn: 'publishMavenJavaPublicationToMavenLocal') << {
+    logger.info "Installing $project.name"
+}
+
+task genPom(dependsOn: 'generatePomFileForMavenJavaPublication') << {
+    logger.info "Generating Pom for $project"
+}
