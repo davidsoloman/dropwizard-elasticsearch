@@ -10,6 +10,8 @@ A bundle approach for using [Elasticsearch] [1] in a [Dropwiwzard] [2] >= 0.8.0 
 Usage
 -----
 
+Sample yaml configuration
+
 ```yaml
 elasticsearch:
   nodeClient: false
@@ -17,6 +19,8 @@ elasticsearch:
     - 192.168.1.2
     - 192.168.1.3:9300
 ```
+
+The MainConfiguration class
 
 ```java
 // ...
@@ -38,6 +42,8 @@ public class MainConfiguration extends Configuration {
     }
 }
 ```
+
+The MainApplication class
 
 ```java
 // ...
@@ -64,6 +70,7 @@ public class MainApplication extends Application<MainConfiguration> {
     public void run(MainConfiguration configuration,
                     Environment environment) {
         // Get the real ES client: org.elasticsearch.client.Client
+        // via `elasticsearch` bundle created above
         // and pass it to a service. Here EsSearchService is an impl of
         // SearchService, and has a contructor that take in an ES Client
         final SearchService searchService = new EsSearchService(elasticsearch.getClient());
