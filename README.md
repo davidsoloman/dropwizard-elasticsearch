@@ -117,6 +117,9 @@ This project is available on JCenter. To add it to your project simply add the f
       <version>0.1.0</version>
     </dependency>
 
+My request to get this included in JCenter is still being processed. Meanwhile you can add it via this instruction
+https://bintray.com/package/buildSettings?pkgPath=%2Fsaikocat%2Fmaven%2Fdropwizard-elasticsearch
+
 
 Support
 -------
