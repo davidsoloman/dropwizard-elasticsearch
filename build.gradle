@@ -30,7 +30,8 @@ dependencies {
 
     testCompile (
         "junit:junit:${junitVersion}",
-        "org.mockito:mockito-all:${mockitoVersion}"
+        "org.mockito:mockito-all:${mockitoVersion}",
+        "org.hamcrest:hamcrest-all:${hamcrestVersion}"
     )
 }
 
