@@ -1,10 +1,11 @@
 Dropwizard Elasticsearch
 ========================
 
-A bundle approach for using [Elasticsearch] [1] in a [Dropwiwzard] [2] >= 0.8.0 application. It is a port of version 0.7.x to use the new bundle system (auto-registration of cluster healthchecks and managed client). Addtional tests are provided. The binary is distributed via [Bintray](https://bintray.com/)
+A bundle approach for using [Elasticsearch] [1] in a [Dropwiwzard] [2] >= 0.8.0 application. It is a port of version 0.7.x to use the new bundle system (auto-registration of cluster healthchecks and managed client). Addtional tests are provided. The binary is distributed via [Bintray] [3]
 
 [1]: http://www.elastic.co
 [2]: http://dropwizard.io/0.8.0/docs
+[3]: https://bintray.com/saikocat/maven/dropwizard-elasticsearch
 
 
 Usage
@@ -108,16 +109,31 @@ An example confiugration file for creating a Transport Client:
 Maven Artifacts
 ---------------
 
-This project is available on JCenter. To add it to your project simply add the following dependencies to your
-`pom.xml` (or better yet use gradle instead :D)
+This project is available on JCenter. To add it to your project simply add the following dependencies to your `pom.xml` (or better yet use gradle instead :D)
 
+```
     <dependency>
       <groupId>com.saikocat.dropwizard-bundles</groupId>
       <artifactId>dropwizard-elasticsearch</artifactId>
       <version>0.1.0</version>
     </dependency>
+```
 
-My request to get this included in JCenter is still being processed. Meanwhile you can add it via this instruction
+Gradle
+
+```
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        compile (
+            'com.saikocat.dropwizard-bundles:dropwizard-elasticsearch:0.1.0'
+        )
+    }
+```
+
+You can also add it via this instruction
 https://bintray.com/package/buildSettings?pkgPath=%2Fsaikocat%2Fmaven%2Fdropwizard-elasticsearch
 
 
@@ -131,6 +147,7 @@ Acknowledgements
 ----------------
 
 Thanks to Jochen Schalanda for his initial work of [Dropwizard-Elasticsearch 0.7.x](https://github.com/dropwizard/dropwizard-elasticsearch)
+
 Thanks to Chua Soon Dee [sdchua](https://github.com/chuasoondee) for contributing to this bundle as well as fixing some of my unit tests.
 
 License
